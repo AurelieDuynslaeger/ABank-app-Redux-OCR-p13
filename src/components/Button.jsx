@@ -1,9 +1,24 @@
-import React from 'react'
+// src/components/Button.jsx
+import PropTypes from 'prop-types';
 
-const Button = () => {
+const Button = ({ type, onClick, children, className }) => {
     return (
-        <div>Button</div>
-    )
-}
+        <button
+            type={type}
+            onClick={onClick}
+            className={`btn ${className}`}
+        >
+            {children}
+        </button>
+    );
+};
 
-export default Button
+Button.propTypes = {
+    type: PropTypes.oneOf(['button', 'submit', 'reset']),
+    onClick: PropTypes.func,
+    children: PropTypes.node.isRequired,
+    className: PropTypes.string,
+};
+
+
+export default Button;
