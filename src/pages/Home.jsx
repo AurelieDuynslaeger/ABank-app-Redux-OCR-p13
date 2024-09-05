@@ -2,10 +2,12 @@
 import FeatureItem from '../components/FeatureItem'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
-import features from "../constants/index"
+import constants from "../constants"
 import "../stylesheet/pages/home.css"
 
 const Home = () => {
+
+    const {features} = constants;
     return (
         <>
             <Header />
