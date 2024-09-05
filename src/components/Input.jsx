@@ -1,30 +1,20 @@
-// src/components/Input.jsx
 import PropTypes from 'prop-types';
 
-const Input = ({ id, label, type, checked, onChange, value, autocomplete }) => {
+const Input = ({ id, label, type, checked, onChange, value, autoComplete }) => {
+    //détermine les classes à appliquer en fonction du type
+    const inputClass = type === 'checkbox' ? 'input-remember' : 'input-wrapper';
+
     return (
-        <div className={`input-wrapper ${type === 'checkbox' ? 'input-remember' : ''}`}>
+        <div className={inputClass}>
             <label htmlFor={id}>{label}</label>
-            {type === 'checkbox' ? (
-                <>
-                    <input 
-                    type={type} 
-                    id={id} 
-                    checked={checked} 
-                    onChange={onChange} 
-                    autoComplete={autocomplete}
-                    />
-                    <label htmlFor={id}>{label}</label>
-                </>
-            ) : (
-                <input 
-                type={type} 
-                id={id} 
-                value={value} 
-                onChange={onChange} 
-                autoComplete={autocomplete}
-                />
-            )}
+            <input
+                type={type}
+                id={id}
+                checked={type === 'checkbox' ? checked : undefined}
+                value={type !== 'checkbox' ? value : undefined}
+                onChange={onChange}
+                autoComplete={autoComplete}
+            />
         </div>
     );
 };
@@ -36,8 +26,7 @@ Input.propTypes = {
     checked: PropTypes.bool,
     onChange: PropTypes.func,
     value: PropTypes.string,
-    autocomplete: PropTypes.string,
+    autoComplete: PropTypes.string,
 };
-
 
 export default Input;
