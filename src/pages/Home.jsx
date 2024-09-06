@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <>
             <Header />
-            <main className='flex-1'>
+            <main>
             <div className="hero">
                 <section className="hero-content">
                 <h2 className="sr-only">Promoted Content</h2>
