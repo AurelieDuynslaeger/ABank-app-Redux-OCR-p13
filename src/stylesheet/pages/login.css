@@ -53,4 +53,8 @@
     font-size: 1.2rem;
   }
 
-
+  .error-message {
+    color: red;
+    font-size: 0.875rem; /* Taille de police plus petite pour le message d'erreur */
+    margin-top: 10px; /* Espacement au-dessus du message d'erreur */
+}

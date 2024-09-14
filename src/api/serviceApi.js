@@ -1,5 +1,5 @@
 export const loginUser = async (email, password) => {
-    const response = await fetch('http://localhost:3001/login', {
+    const response = await fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -8,7 +8,8 @@ export const loginUser = async (email, password) => {
     });
 
     if (!response.ok) {
-        throw new Error('Login failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Echec de connexion');
     }
 
     return response.json();
