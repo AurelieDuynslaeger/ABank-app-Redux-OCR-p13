@@ -25,8 +25,10 @@ const handleSubmit = async (event) => {
     setLoading(true);
     setError(''); 
     try {
-        const user = await loginUser(email, password);
-        dispatch(login(user));
+        const { user, token } = await loginUser(email, password);
+         //stock du token dans le local storage
+         localStorage.setItem('authToken', token);
+         dispatch(login({ user }));
         navigate('/profile');
     } catch (error) {
         setError(error.message || 'Echec de connexion, verifiez vos identifiants.');
