@@ -34,12 +34,16 @@ export const authSlice = createSlice({
             state.user = null;
             // Supprime le token du localStorage pour déconnecter l'utilisateur
             localStorage.removeItem('authToken');
+        },
+        //action de mise à jour des infos utilisateur
+        updateUser: (state, { payload }) => {
+            state.user = { ...state.user, ...payload };
         }
     },
 });
 
 //exporter des actions
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateUser } = authSlice.actions;
 
 //exporter du réducteur pour l'ajouter au store
 export default authSlice.reducer;

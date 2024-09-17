@@ -19,22 +19,32 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-const handleSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-    setError(''); 
-    try {
-        const { user, token } = await loginUser(email, password);
-         //stock du token dans le local storage
-         localStorage.setItem('authToken', token);
-         dispatch(login({ token, user }));
-        navigate('/profile');
-    } catch (error) {
-        setError(error.message || 'Echec de connexion, verifiez vos identifiants.');
-    } finally {
-        setLoading(false);
-    }
-};
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        setError('');
+    
+        try {
+            const response = await loginUser(email, password);
+            console.log('Login Response:', response);
+    
+            //accés au token depuis response.body
+            const { token } = response.body;
+            if (!token) {
+                throw new Error('Token manquant dans la réponse de connexion');
+            }
+    
+            localStorage.setItem('authToken', token);
+            dispatch(login({ token }));
+            navigate('/profile');
+        } catch (error) {
+            console.error('Login Error:', error);
+            setError(error.message || 'Echec de connexion, vérifiez vos identifiants.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
        <>
         <Header/>

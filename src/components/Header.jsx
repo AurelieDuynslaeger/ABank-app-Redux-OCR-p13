@@ -13,9 +13,6 @@ const Header = () => {
     //récupération des infos d'authentification depuis Redux
     const { user, isAuthenticated } = useSelector((state) => state.auth); 
 
-    console.log(user);
-    
-
     //déconnexion
     const handleLogout = () => {
         dispatch(logout()); 

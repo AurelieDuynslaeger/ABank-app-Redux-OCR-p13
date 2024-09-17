@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Input = ({ id, label, type, checked, onChange, value, autoComplete }) => {
+const Input = ({ id, label, type, checked, onChange, value, autoComplete, placeholder }) => {
     //détermine les classes à appliquer en fonction du type
     const inputClass = type === 'checkbox' ? 'input-remember' : 'input-wrapper';
 
@@ -14,6 +14,7 @@ const Input = ({ id, label, type, checked, onChange, value, autoComplete }) => {
                 value={type !== 'checkbox' ? value : undefined}
                 onChange={onChange}
                 autoComplete={autoComplete}
+                placeholder={placeholder}
             />
         </div>
     );
@@ -27,6 +28,7 @@ Input.propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.string,
     autoComplete: PropTypes.string,
+    placeholder: PropTypes.string,
 };
 
 export default Input;
