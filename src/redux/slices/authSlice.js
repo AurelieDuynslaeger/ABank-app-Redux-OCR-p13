@@ -1,23 +1,40 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
+//récup du token stocké dans localStorage ou initialise à null s'il n'y en a pas
+const initialState = {
+    token: localStorage.getItem('authToken') || null,
+    isAuthenticated: !!localStorage.getItem('authToken'),
+    //infos user si besoin
+    user: null,
+    error: null
+};
+
 //création d'un slice pour gérer l'authentification
 export const authSlice = createSlice({
     name: 'auth',
-    initialState: {
-        user: null, //l'utilisateur actuellement connecté, initialisé à null
-        isAuthenticated: false, //indicateur d'authentification, initialisé à false
-    },
+    initialState,
     reducers: {
         //action pour connecter un utilisateur
-        login: (state, action) => {
-            state.user = action.payload; //stocker les données de l'utilisateur dans l'état
-            state.isAuthenticated = true; //mettre à jour l'état pour indiquer que l'utilisateur est authentifié
+        login: (state, { payload }) => {
+            //stocker les données de l'utilisateur dans l'état
+            const { token, user } = payload;
+            //mettre à jour l'état pour indiquer que l'utilisateur est authentifié et token enregistré
+            state.token = token;
+            state.isAuthenticated = true;
+            state.user = user;
+            // Stocke le token dans localStorage pour persister la session
+            localStorage.setItem('authToken', token);
         },
         //action pour déconnecter un utilisateur
         logout: (state) => {
-            state.user = null; //réinitialiser les données de l'utilisateur
-            state.isAuthenticated = false; //mettre à jour l'état pour indiquer que l'utilisateur n'est plus authentifié
-        },
+            //réinitialiser les données de l'utilisateur
+            state.token = null;
+            state.isAuthenticated = false;
+            state.user = null;
+            // Supprime le token du localStorage pour déconnecter l'utilisateur
+            localStorage.removeItem('authToken');
+        }
     },
 });
 

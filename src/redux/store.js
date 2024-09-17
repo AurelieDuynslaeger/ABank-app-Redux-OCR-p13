@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer, { setUser } from './slices/authSlice';
+import authReducer, { login, logout } from './slices/authSlice';
 
 export const store = configureStore({
     reducer: {
@@ -7,22 +7,30 @@ export const store = configureStore({
     },
 });
 
-//informations utilisateur si un token est présent
+//infos utilisateur si un token est présent
 const token = localStorage.getItem('authToken');
 
 if (token) {
-    //demande pour récupérer les détails de l'utilisateur en utilisant le token
+    //demande pour récup les détails de l'utilisateur en utilisant le token
     fetch('http://localhost:3001/api/v1/user/me', {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
         },
     })
-        .then(response => response.json())
-        .then(user => store.dispatch(setUser({ user })))
-        //Stock les informations utilisateur dans Redux
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch user details');
+            }
+            return response.json();
+        })
+        .then(user => {
+            //met à jour l'état auth en utilisant l'action login
+            store.dispatch(login({ token, user }));
+        })
         .catch(error => {
             console.error('Failed to fetch user details:', error);
-            localStorage.removeItem('authToken');
+            //supprimer le token du localStorage s'il y a une erreur
+            store.dispatch(logout());
         });
 }

@@ -5,10 +5,10 @@ import Footer from '../components/Footer'
 import { useDispatch } from 'react-redux';
 import {login} from '../redux/slices/authSlice'
 import {loginUser} from '../api/serviceApi'
-import "../stylesheet/pages/login.css"
 import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../stylesheet/pages/login.css"
 
 
 const Login = () => {
@@ -17,7 +17,6 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
     const [loading, setLoading] = useState(false);
 
 const handleSubmit = async (event) => {
@@ -28,7 +27,7 @@ const handleSubmit = async (event) => {
         const { user, token } = await loginUser(email, password);
          //stock du token dans le local storage
          localStorage.setItem('authToken', token);
-         dispatch(login({ user }));
+         dispatch(login({ token, user }));
         navigate('/profile');
     } catch (error) {
         setError(error.message || 'Echec de connexion, verifiez vos identifiants.');

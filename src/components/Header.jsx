@@ -19,7 +19,6 @@ const Header = () => {
     //déconnexion
     const handleLogout = () => {
         dispatch(logout()); 
-        localStorage.removeItem('authToken'); 
         navigate('/home'); 
     };
 
@@ -34,7 +33,7 @@ const Header = () => {
                     <div className="user_loggedin">
                         <div className="user_avatar">
                             <FaUserCircle /> 
-                            <p>{user.firstname}</p>
+                            <p>{user?.firstname || "User"}</p>
                         </div>
                         <button onClick={handleLogout} className="logout-button">
                             <IoLogOut />
