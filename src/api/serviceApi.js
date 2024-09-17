@@ -1,3 +1,21 @@
+/**
+ * Authentifie un utilisateur en envoyant une requête de connexion au serveur.
+ *
+ * @param {string} email - L'adresse e-mail de l'utilisateur pour la connexion.
+ * @param {string} password - Le mot de passe de l'utilisateur pour la connexion.
+ * @returns {Promise<Object>} - Une promesse qui résout les données de la réponse du serveur, y compris le token d'authentification.
+ * @throws {Error} - Lance une erreur si la connexion échoue, avec un message d'erreur approprié.
+ *
+ * @example
+ * // Exemple d'utilisation
+ * try {
+ *   const { token, user } = await loginUser('user@example.com', 'password123');
+ *   console.log('Token:', token);
+ * } catch (error) {
+ *   console.error('Erreur de connexion:', error.message);
+ * }
+ */
+
 export const loginUser = async (email, password) => {
     const response = await fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
@@ -18,6 +36,26 @@ export const loginUser = async (email, password) => {
     return data;
 };
 
+
+/**
+ * Met à jour les informations du profil utilisateur en envoyant une requête au serveur.
+ *
+ * @param {string} token - Le token d'authentification de l'utilisateur pour accéder à l'API.
+ * @param {Object} updatedData - Les données mises à jour du profil utilisateur.
+ * @param {string} updatedData.firstName - Le prénom mis à jour de l'utilisateur.
+ * @param {string} updatedData.lastName - Le nom de famille mis à jour de l'utilisateur.
+ * @returns {Promise<Object>} - Une promesse qui résout les données de la réponse du serveur après la mise à jour du profil.
+ * @throws {Error} - Lance une erreur si la mise à jour du profil échoue, avec un message d'erreur approprié.
+ *
+ * @example
+ * // Exemple d'utilisation
+ * try {
+ *   const updatedUser = await updateUserProfile('your-token-here', { firstName: 'John', lastName: 'Doe' });
+ *   console.log('Utilisateur mis à jour:', updatedUser);
+ * } catch (error) {
+ *   console.error('Erreur de mise à jour du profil:', error.message);
+ * }
+ */
 export const updateUserProfile = async (token, updatedData) => {
     console.log('Token:', token);
     if (!token) {

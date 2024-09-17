@@ -10,10 +10,19 @@ import { updateUserProfile } from '../api/serviceApi';
 import { updateUser } from '../redux/slices/authSlice';
 import "../stylesheet/pages/userprofile.css"
 
+/**
+ * Composant pour afficher et modifier le profil utilisateur.
+ * Permet à l'utilisateur de voir ses informations et de les modifier.
+ * Affiche également des informations de compte à l'utilisateur.
+ * 
+ * @component
+ */
+
 const UserProfile = () => {
     const dispatch = useDispatch();
     const { user, token } = useSelector((state) => state.auth);
 
+    //États pour gérer l'édition du profil
     const [isEditing, setIsEditing] = useState(false);
     const [firstname, setFirstname] = useState(user?.firstName || '');
     const [lastname, setLastname] = useState(user?.lastName || '');
@@ -22,23 +31,35 @@ const UserProfile = () => {
 
     const { account } = constants;
 
+    /**
+     * Active le mode édition pour le profil utilisateur.
+     */
     const handleEditClick = () => {
         setIsEditing(true);
     };
 
+    /**
+     * Annule les modifications et retourne à l'affichage des informations du profil.
+     */
     const handleCancelClick = () => {
         setIsEditing(false);
         setFirstname(user?.firstName || '');
         setLastname(user?.lastName || '');
     };
 
+    /**
+     * Gère la mise à jour du profil utilisateur en envoyant les données modifiées à l'API.
+     * Affiche un message de succès ou d'erreur en fonction du résultat de la mise à jour.
+     * 
+     * @param {Event} e - L'événement de soumission du formulaire.
+     */
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         setError('');
         setSuccess('');
     
         try {
-            const token = localStorage.getItem('authToken');
+            // const token = localStorage.getItem('authToken');
             console.log('Retrieved Token:', token);
     
             if (!token) {

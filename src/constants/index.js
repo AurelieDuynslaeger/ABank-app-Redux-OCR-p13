@@ -2,6 +2,7 @@
 import chat from "../../public/img/icon-chat.png"
 import money from "../../public/img/icon-money.png"
 import security from "../../public/img/icon-security.png"
+
 const features = [
     {
         icon: chat,

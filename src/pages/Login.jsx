@@ -10,14 +10,31 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../stylesheet/pages/login.css"
 
+/**
+ * Composant de connexion utilisateur.
+ * Permet à un utilisateur de se connecter en fournissant son email et son mot de passe.
+ * Affiche les messages d'erreur en cas de problème lors de la connexion.
+ * Gère l'état de chargement pendant la tentative de connexion.
+ * 
+ * @component
+ */
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    //Etat pour gérer les valeurs du formulaire
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    /**
+     * Gère la soumission du formulaire de connexion.
+     * Envoie une requête de connexion à l'API et met à jour l'état de l'application en fonction de la réponse.
+     * Affiche les messages d'erreur en cas d'échec de connexion.
+     * 
+     * @param {Event} event - L'événement de soumission du formulaire.
+     */
 
     const handleSubmit = async (event) => {
         event.preventDefault();
