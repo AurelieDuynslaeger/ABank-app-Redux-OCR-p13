@@ -18,7 +18,7 @@ const Header = () => {
     //déconnexion
     const handleLogout = () => {
         dispatch(logout()); 
-        navigate('/home'); 
+        navigate('/'); 
     };
 
     return (

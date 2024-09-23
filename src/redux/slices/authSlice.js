@@ -44,7 +44,7 @@ export const authSlice = createSlice({
             state.token = token;
             state.isAuthenticated = true;
             state.user = user;
-            // Stocke le token dans localStorage pour persister la session
+            //stocke le token dans localStorage pour persister la session
             localStorage.setItem('authToken', token);
         },
         /**
@@ -56,7 +56,7 @@ export const authSlice = createSlice({
             state.token = null;
             state.isAuthenticated = false;
             state.user = null;
-            // Supprime le token du localStorage pour déconnecter l'utilisateur
+            //supprime le token du localStorage pour déconnecter l'utilisateur
             localStorage.removeItem('authToken');
         }
     },

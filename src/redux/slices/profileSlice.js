@@ -51,7 +51,7 @@ export const profileSlice = createSlice({
     },
 });
 
-// Exporter les actions pour les utiliser dans les composants
+//exporter les actions pour les utiliser dans les composants
 export const {
     fetchProfileStart,
     fetchProfileSuccess,
@@ -59,5 +59,5 @@ export const {
     updateUserProfile
 } = profileSlice.actions;
 
-// Exporter le réducteur pour l'ajouter au store Redux
+
 export default profileSlice.reducer;

@@ -39,7 +39,7 @@ if (token) {
         .then(user => {
             //met à jour l'état d'authentification avec les détails de l'utilisateur et le token
             store.dispatch(login({ token }));
-            // Met à jour l'état du profil utilisateur avec les informations récupérées
+            //met à jour l'état du profil utilisateur avec les informations récupérées
             store.dispatch({
                 type: 'profile/fetchProfileSuccess',
                 payload: user,
