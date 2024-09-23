@@ -6,8 +6,8 @@ import AccountCard from '../components/AccountCard'
 import Input from '../components/Input'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from '../api/serviceApi';
-import { updateUser } from '../redux/slices/authSlice';
+import { updateUserData } from '../api/serviceApi';
+import { updateUserProfile } from '../redux/slices/profileSlice';
 import "../stylesheet/pages/userprofile.css"
 
 /**
@@ -20,8 +20,9 @@ import "../stylesheet/pages/userprofile.css"
 
 const UserProfile = () => {
     const dispatch = useDispatch();
-    const { user, token } = useSelector((state) => state.auth);
+    const { token } = useSelector((state) => state.auth);
 
+    const {user} = useSelector((state)=> state.profile)
     //États pour gérer l'édition du profil
     const [isEditing, setIsEditing] = useState(false);
     const [firstname, setFirstname] = useState(user?.firstName || '');
@@ -68,9 +69,9 @@ const UserProfile = () => {
     
             const updatedData = { firstName: firstname, lastName: lastname };
             console.log('Updated Data:', updatedData);
-            const updatedUser = await updateUserProfile(token, updatedData);
+            const updatedUser = await updateUserData(token, updatedData);
     
-            dispatch(updateUser(updatedUser));
+            dispatch(updateUserProfile(updatedUser));
             setSuccess('Profil mis à jour avec succès');
             setIsEditing(false);
         } catch (err) {

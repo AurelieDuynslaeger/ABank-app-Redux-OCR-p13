@@ -1,7 +1,7 @@
 //features img
-import chat from "../../public/img/icon-chat.png"
-import money from "../../public/img/icon-money.png"
-import security from "../../public/img/icon-security.png"
+import chat from "/img/icon-chat.png"
+import money from "/img/icon-money.png"
+import security from "/img/icon-security.png"
 
 const features = [
     {

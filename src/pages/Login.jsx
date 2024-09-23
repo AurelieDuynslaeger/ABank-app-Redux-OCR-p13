@@ -4,7 +4,8 @@ import Input from "../components/Input";
 import Footer from '../components/Footer'
 import { useDispatch } from 'react-redux';
 import {login} from '../redux/slices/authSlice'
-import {loginUser} from '../api/serviceApi'
+import { fetchProfileStart, fetchProfileSuccess, fetchProfileFailure } from '../redux/slices/profileSlice';
+import {loginUser, getUserProfile } from '../api/serviceApi'
 import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -52,11 +53,18 @@ const Login = () => {
             }
     
             localStorage.setItem('authToken', token);
-            dispatch(login({ token }));
+
+            dispatch(login({ token}));
+
+            //dispatch de l'action pour fetch user profile
+        dispatch(fetchProfileStart());
+        const userProfile = await getUserProfile(token);
+        dispatch(fetchProfileSuccess(userProfile.body));
             navigate('/profile');
         } catch (error) {
             console.error('Login Error:', error);
             setError(error.message || 'Echec de connexion, vérifiez vos identifiants.');
+            dispatch(fetchProfileFailure(error.message));
         } finally {
             setLoading(false);
         }

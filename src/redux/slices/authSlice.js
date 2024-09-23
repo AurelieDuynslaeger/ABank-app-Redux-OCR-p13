@@ -14,7 +14,6 @@ const initialState = {
     token: localStorage.getItem('authToken') || null,
     isAuthenticated: !!localStorage.getItem('authToken'),
     //infos user si besoin
-    user: null,
     error: null
 };
 
@@ -59,21 +58,12 @@ export const authSlice = createSlice({
             state.user = null;
             // Supprime le token du localStorage pour déconnecter l'utilisateur
             localStorage.removeItem('authToken');
-        },
-        /**
-         * Met à jour les informations de l'utilisateur dans l'état.
-         * @param {Object} state - L'état actuel du slice.
-         * @param {Object} action - L'action contenant le payload.
-         * @param {Object} action.payload - Les nouvelles informations de l'utilisateur.
-         */
-        updateUser: (state, { payload }) => {
-            state.user = { ...state.user, ...payload };
         }
     },
 });
 
 //exporter des actions du slice pour les utiliser dans les composants.
-export const { login, logout, updateUser } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 
 //exporter du réducteur pour l'ajouter au store Redux
 export default authSlice.reducer;

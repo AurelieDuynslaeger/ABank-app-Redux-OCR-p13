@@ -56,7 +56,7 @@ export const loginUser = async (email, password) => {
  *   console.error('Erreur de mise à jour du profil:', error.message);
  * }
  */
-export const updateUserProfile = async (token, updatedData) => {
+export const updateUserData = async (token, updatedData) => {
     console.log('Token:', token);
     if (!token) {
         throw new Error('Token manquant pour la mise à jour du profil');
@@ -74,6 +74,43 @@ export const updateUserProfile = async (token, updatedData) => {
     if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Echec de mise à jour du profil');
+    }
+
+    return response.json();
+};
+
+/**
+ * Récupère les informations du profil utilisateur en envoyant une requête au serveur.
+ *
+ * @param {string} token - Le token d'authentification de l'utilisateur pour accéder à l'API.
+ * @returns {Promise<Object>} - Une promesse qui résout les données de la réponse du serveur, y compris les informations du profil.
+ * @throws {Error} - Lance une erreur si la récupération du profil échoue, avec un message d'erreur approprié.
+ *
+ * @example
+ * // Exemple d'utilisation
+ * try {
+ *   const userProfile = await getUserProfile('your-token-here');
+ *   console.log('Profil utilisateur:', userProfile);
+ * } catch (error) {
+ *   console.error('Erreur de récupération du profil:', error.message);
+ * }
+ */
+export const getUserProfile = async (token) => {
+    if (!token) {
+        throw new Error('Token manquant pour la récupération du profil utilisateur');
+    }
+
+    const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Echec de récupération du profil utilisateur');
     }
 
     return response.json();

@@ -11,7 +11,9 @@ const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     //récupération des infos d'authentification depuis Redux
-    const { user, isAuthenticated } = useSelector((state) => state.auth); 
+    const {isAuthenticated } = useSelector((state) => state.auth); 
+
+    const {user} = useSelector((state)=> state.profile)
 
     //déconnexion
     const handleLogout = () => {
@@ -30,9 +32,9 @@ const Header = () => {
                     <div className="user_loggedin">
                         <div className="user_avatar">
                             <FaUserCircle /> 
-                            <p>{user?.firstname || "User"}</p>
+                            <p>{user?.firstName || "User"}</p>
                         </div>
-                        <button onClick={handleLogout} className="logout-button">
+                        <button onClick={handleLogout} className="logout-button" aria-label="Sign out">
                             <IoLogOut />
                             Sign Out
                         </button>

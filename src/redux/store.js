@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer, { login, logout } from './slices/authSlice';
-
+import profileReducer from './slices/profileSlice';
 /**
  * Création du store Redux.
  * Le store est configuré avec le réducteur d'authentification pour gérer l'état d'authentification.
@@ -9,6 +9,7 @@ import authReducer, { login, logout } from './slices/authSlice';
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        profile: profileReducer
     },
 });
 
@@ -21,10 +22,11 @@ const token = localStorage.getItem('authToken');
  * Si la récupération des détails échoue, le token est supprimé et l'état d'authentification est réinitialisé.
  */
 if (token) {
-    fetch('http://localhost:3001/api/v1/user/me', {
-        method: 'GET',
+    fetch('http://localhost:3001/api/v1/user/profile', {
+        method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
         },
     })
         .then(response => {
@@ -36,7 +38,12 @@ if (token) {
         })
         .then(user => {
             //met à jour l'état d'authentification avec les détails de l'utilisateur et le token
-            store.dispatch(login({ token, user }));
+            store.dispatch(login({ token }));
+            // Met à jour l'état du profil utilisateur avec les informations récupérées
+            store.dispatch({
+                type: 'profile/fetchProfileSuccess',
+                payload: user,
+            });
         })
         .catch(error => {
             //si une erreur survient, déconnecte l'utilisateur et supprime le token du localStorage
