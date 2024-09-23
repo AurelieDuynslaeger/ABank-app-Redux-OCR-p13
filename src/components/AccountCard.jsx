@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const AccountCard = ({ title, amount, description, onButtonClick }) => {
+const AccountCard = ({ title, amount, description }) => {
     return (
         <section className="account">
             <div className="account-content-wrapper">
@@ -9,7 +9,7 @@ const AccountCard = ({ title, amount, description, onButtonClick }) => {
                 <p className="account-amount-description">{description}</p>
             </div>
             <div className="account-content-wrapper cta">
-                <button className="transaction-button" onClick={onButtonClick}>
+                <button className="transaction-button">
                     View transactions
                 </button>
             </div>
@@ -19,9 +19,8 @@ const AccountCard = ({ title, amount, description, onButtonClick }) => {
 
 AccountCard.propTypes = {
     title: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
+    amount: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    onButtonClick: PropTypes.func, 
 };
 
 export default AccountCard;

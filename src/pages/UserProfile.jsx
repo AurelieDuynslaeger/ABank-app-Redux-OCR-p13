@@ -131,7 +131,6 @@ const UserProfile = () => {
                         title={acc.title}
                         amount={acc.amount}
                         description={acc.description}
-                        onButtonClick=""
                     />
                 ))}
             </main>
