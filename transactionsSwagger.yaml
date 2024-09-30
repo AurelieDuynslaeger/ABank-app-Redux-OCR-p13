@@ -1,0 +1,203 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API documentation
+  version: '1.0.0'
+  description: |
+    Contains all available API endpoints for managing transactions.
+
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+
+paths:
+  /transactions/current-month:
+    get:
+      summary: "Retrieve all transactions for the current month, grouped by account"
+      responses:
+        '200':
+          description: "List of transactions for the current month"
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                transactionId:
+                  type: string
+                  description: "ID of the transaction"
+                accountId:
+                  type: string
+                  description: "ID of the associated account"
+                amount:
+                  type: number
+                  format: float
+                  description: "Amount of the transaction"
+                date:
+                  type: string
+                  format: date
+                  description: "Date of the transaction"
+                description:
+                  type: string
+                  description: "Description of the transaction"
+                type:
+                  type: string
+                  description: "Type of transaction (e.g., electronic)"
+                category:
+                  type: string
+                  description: "Category of the transaction (modifiable)"
+                note:
+                  type: string
+                  description: "User-added note for the transaction"
+        '401':
+          description: "Unauthorized. User must be authenticated."
+        '500':
+          description: "Server error while retrieving transactions"
+
+  /transactions/details/{transactionId}:
+    get:
+      summary: "Retrieve details of a specific transaction"
+      parameters:
+        - in: path
+          name: transactionId
+          required: true
+          type: string
+          description: "ID of the transaction to retrieve details for"
+      responses:
+        '200':
+          description: "Details of the transaction"
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: string
+                description: "ID of the transaction"
+              accountId:
+                type: string
+                description: "ID of the associated account"
+              amount:
+                type: number
+                format: float
+                description: "Amount of the transaction"
+              date:
+                type: string
+                format: date
+                description: "Date of the transaction"
+              description:
+                type: string
+                description: "Description of the transaction"
+              type:
+                type: string
+                description: "Type of transaction (e.g., electronic)"
+              category:
+                type: string
+                description: "Category of the transaction (modifiable)"
+              note:
+                type: string
+                description: "User-added note for the transaction"
+        '404':
+          description: "Transaction not found"
+        '401':
+          description: "Unauthorized. User must be authenticated."
+        '500':
+          description: "Server error while retrieving transaction details"
+  /transactions/new-transaction:
+    post:
+      summary: "Create a new transaction"
+      parameters:
+        - in: body
+          name: transaction
+          required: true
+          schema:
+            type: object
+            properties:
+              accountId:
+                type: string
+                description: "ID of the associated account"
+              amount:
+                type: number
+                format: float
+                description: "Amount of the transaction (required)"
+              date:
+                type: string
+                format: date
+                description: "Date of the transaction (required)"
+              description:
+                type: string
+                description: "Description of the transaction (required)"
+              type:
+                type: string
+                description: "Type of transaction (e.g., electronic) (required)"
+              category:
+                type: string
+                description: "Category of the transaction (modifiable)"
+              note:
+                type: string
+                description: "User-added note for the transaction (optional)"
+            required:
+              - accountId
+              - amount
+              - date
+              - description
+              - type
+      responses:
+        '201':
+          description: "Transaction successfully created"
+        '400':
+          description: "Invalid data provided for the transaction"
+        '401':
+          description: "Unauthorized. User must be authenticated."
+        '500':
+          description: "Server error while creating the transaction"
+
+  /transactions/update/{transactionId}:
+    put:
+      summary: "Update information of a specific transaction"
+      parameters:
+        - in: path
+          name: transactionId
+          required: true
+          type: string
+          description: "ID of the transaction to update"
+        - in: body
+          name: transaction
+          required: true
+          schema:
+            type: object
+            properties:
+              amount:
+                type: number
+                format: float
+                description: "Amount of the transaction (modifiable)"
+              date:
+                type: string
+                format: date
+                description: "Date of the transaction (modifiable)"
+              description:
+                type: string
+                description: "Description of the transaction (modifiable)"
+              type:
+                type: string
+                description: "Type of transaction (modifiable)"
+              category:
+                type: string
+                description: "Category of the transaction (modifiable) - can be set to null or empty string to remove"
+              note:
+                type: string
+                description: "User-added note for the transaction (modifiable) - can be set to null or empty string to remove"
+            required:
+              - type
+      responses:
+        '200':
+          description: "Transaction successfully updated"
+        '404':
+          description: "Transaction not found"
+        '400':
+          description: "Invalid data provided for update"
+        '401':
+          description: "Unauthorized. User must be authenticated."
+        '500':
+          description: "Server error while updating the transaction"

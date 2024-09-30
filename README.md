@@ -39,7 +39,24 @@ Un contrat en deux parties qui se décompose en plusieurs phases :
 - **Documentation complète** avec un ReadMe, **JSDoc**, et des **PropTypes** pour une meilleure collaboration au sein de l'équipe.
 - Interface utilisateur réactive et intuitive.
 
+
+### Concernant la Phase 2 : Gestion des transactions via l'API
+
+Dans la phase 2 du projet, une réflexion approfondie a été menée sur la gestion des transactions des utilisateurs via des endpoints API. L'objectif était de permettre aux utilisateurs d'accéder à leurs transactions, d'en créer de nouvelles, de les modifier ou de les supprimer. Voici les principaux endpoints créés et documentés via **Swagger** :
+
+- **GET /transactions/current-month** : Récupère toutes les transactions du mois en cours, groupées par compte. Ce endpoint permet aux utilisateurs d'avoir une vue d'ensemble des transactions mensuelles avec des détails comme l'ID de la transaction, la date, le montant, la catégorie et des notes ajoutées par l'utilisateur.
+
+- **GET /transactions/details/{transactionId}** : Permet de récupérer les détails d'une transaction spécifique en fournissant son ID. Cela inclut les informations telles que le type de transaction, la catégorie, et toute note personnelle ajoutée.
+
+- **POST /transactions/new-transaction** : Endpoint permettant la création d'une nouvelle transaction. L'utilisateur peut spécifier le compte associé, le montant, la date, la description et d'autres informations comme la catégorie de la transaction et une note personnalisée.
+
+- **PUT /transactions/update/{transactionId}** : Ce endpoint permet de mettre à jour les informations d'une transaction existante, y compris le montant, la date, la description et d'autres détails modifiables. Il est également possible de retirer ou de modifier la catégorie et les notes associées.
+
+Ces endpoints sont documentés dans **Swagger** pour permettre une exploration facile et des tests via l'interface Swagger UI. Ils respectent les normes de sécurité avec l'authentification **JWT**, garantissant que seules les personnes authentifiées peuvent interagir avec leurs transactions.
+
+
 <img src="./src/assets/edit-user-name.png" alt="homepage" width="500">
+<img src="./src/assets/swagger_screen.png" alt="homepage" width="500">
 
 ## Technologies utilisées
 
