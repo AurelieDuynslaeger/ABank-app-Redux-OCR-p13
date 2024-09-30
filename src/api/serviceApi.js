@@ -76,7 +76,10 @@ export const updateUserData = async (token, updatedData) => {
         throw new Error(errorData.message || 'Echec de mise à jour du profil');
     }
 
-    return response.json();
+    const responseBody = await response.json()
+    console.log('Response Body:', responseBody);
+
+    return responseBody;
 };
 
 /**

@@ -71,7 +71,7 @@ const UserProfile = () => {
             console.log('Updated Data:', updatedData);
             const updatedUser = await updateUserData(token, updatedData);
     
-            dispatch(updateUserProfile(updatedUser));
+            dispatch(updateUserProfile(updatedUser.body));
             setSuccess('Profil mis à jour avec succès');
             setIsEditing(false);
         } catch (err) {
